@@ -22,11 +22,12 @@ Sentence -> Vector, Collection of Sentence -> Document -> Matrices.
 ---
 ## Dot Product
 ---
-> (A.B) = A1XB1 + A2XB2 + ..
+
+(A.B) = A1XB1 + A2XB2 + ..
 Dot Product gives us how much the vectors align. If the relevance score is high then it the vectors are in same directions if not then they are unrelated.
 For example: An animal is walking on the road. It needs help. Here logically the 'It' should be animal not road this should be understood by the LLM.
 Here for example: It->`[1,0]`, Animal->`[1,0]`,Road->`[0,0]`. Then the dot product of 'it' with 'animal' and 'it' with 'road' are given by,
-> [(1x1)+(0x0)] = 1 (Animal) , [(1x0)+(0x0)] = 0 (Road). So the animal has more relevance.
+[(1x1)+(0x0)] = 1 (Animal) , [(1x0)+(0x0)] = 0 (Road). So the animal has more relevance.
 This used in Attention mechanism. Token relevance is decided here.
 
 ---
