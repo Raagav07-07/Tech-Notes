@@ -34,6 +34,7 @@ It answers which parameters contributed most to the mistake and it will nudge th
 If we update too much,  
   - the model forget the old parameters
   - becomes unstable
+
 If we update a little,
   - learning is slow
 *This is controlled by learning rate* - Lower the learning rate, little the update takes place.
