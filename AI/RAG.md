@@ -204,6 +204,63 @@ LLM answer
 
 ---
 
+**RAG Prompt Design**  
+
+When a model uses its memory instead of using the chunks retrieved then the probability of choosing the answer from the memory is higher than the probability of choosing from retrieved chunks. So we must have to shift probabilities. 
+
+**A Good RAG Prompt has 4 parts**
+- Roles
+- Rules
+- Context
+- Questions
+
+1. **Role**
+It defines the role of RAG system. Eg. You are a compliance checker. You answer only from the retrieved policy chunks.
+
+2. **Rules**
+Example rules,
+- Answer only from the context
+- If answer not present, say "Not found in document"
+- Do not use prior knowledge
+- Quote relevant lines
+
+3. **Context**
+
+Bad
+``` [big text blob] ```
+
+Good
+```
+Document: HR Leave Policy
+Section: Intern Leave Rules
+Content:
+"...text..."
+```
+
+4. **Always keep question after the context** - LLM's give more weight to the recent tokens.
+
+----
+
+### Sample RAG Prompt
+
+```
+You are an assistant that answers strictly from the given document.
+
+Rules:
+- Use only the provided context
+- If not present, say "Not found in document"
+- Cite the relevant sentence
+
+Context:
+[Chunk 1 with title]
+[Chunk 2 with title]
+[Chunk 3 with title]
+
+Question:
+...
+```
+---
+
 
 
 
