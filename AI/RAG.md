@@ -74,8 +74,8 @@ From the retreived chunks we will take the top-k chunks for the context based on
 ---
 
 **When RAG can fail?**  
-Problems | Cause
----------|------
+Problems | Cause 
+----------------|------------
 Wrong chunks retreived | Bad embeddings 
 Too much context | Token overflow
 Model ignores context | Prompt poorly designed 
@@ -105,6 +105,107 @@ Chunking → Fit window
 Context → Ground LLM
 LLM → Fluent generator
 ```
+
+---
+
+# RAG Tuning - Metadata, Chunking, Re-ranking 
+
+*90% of the RAG failures are due to chunking and retrieval not the model*
+
+**Chunking strategies**  
+Naive chunking is the wrong way of chunking like fixing the chunk size to 200-500 tokens or something like this. The problems can be meaning can be broken, sentences can be cut, embedding becomes weak. 
+
+*Semantic chunking is the right way to do it*
+
+Split by, 
+- Paragraphs
+- Headings
+- Sections
+- Meaning boundaries
+
+Chunk should answer , Can this chunk answer independently?  
+
+**Overlapping chunks**
+
+We add overlaps like, 
+Chunk 1: 200-350 token
+Chunk 2: 300-350 token
+
+Because info may sit at boundaries. 
+
+---
+**Metadata**
+Each chunk should store metadata. 
+Eg. 
+```
+{
+  source: "HR_policy.pdf",
+  section: "Leave Policy",
+  page: 12,
+  date: "2024"
+}
+```
+Before vector search we can filter. It improves retrieval. 
+
+---
+
+**WHY Similarity search is not enough?**
+
+Cosine similarity gives top-k chunks where some are loosely relevant and some are very relevant. 
+
+So we need **re-ranking**.
+
+---
+**Re-Ranking** 
+
+After retrieving top 10 chunks, 
+Use a small model to answer which chunk answers the best to the question. 
+This improves answer quality. 
+
+---
+**Hybrid Search** 
+Sometimes embeddings miss exact terms. Hence we use keyword search + vector search. 
+
+---
+
+**When RAG gives wrong answers?**  
+
+| Symptom               | Root Cause             |
+| --------------------- | ---------------------- |
+| Irrelevant answer     | Wrong chunks retrieved |
+| Partial answer        | Chunk split badly      |
+| Model ignores context | Prompt bad             |
+| Too long context      | Token overflow         |
+| Conflicting chunks    | Need reranking         |
+
+---
+
+**Ideal RAG** 
+
+Docs
+ ↓
+Semantic chunking + overlap
+ ↓
+Embeddings
+ ↓
+Vector DB (+ metadata)
+ ↓
+User query
+ ↓
+Metadata filter
+ ↓
+Vector search (top 10)
+ ↓
+Reranker (top 3)
+ ↓
+Structured context prompt
+ ↓
+LLM answer
+
+---
+
+
+
 
 
 
