@@ -64,22 +64,22 @@ The user question is convertd into embeddings.
 ---
 
 6. **Cosine Similarity**
-We take the cosine similarity between the question vector and all chunks and retreive the relevant chunks in same vector space.
+We take the cosine similarity between the question vector and all chunks and retrieve the relevant chunks in same vector space.
 
 ---
 
 7. **Retrieve top-k chunks**
-From the retreived chunks we will take the top-k chunks for the context based on the similarity score.
+From the retrieved chunks we will take the top-k chunks for the context based on the similarity score.
 
 ---
 
 **When RAG can fail?**  
 Problems | Cause 
 ----------------|------------
-Wrong chunks retreived | Bad embeddings 
+Wrong chunks retrieved | Bad embeddings
 Too much context | Token overflow
-Model ignores context | Prompt poorly designed 
-Similar chunking | Needs reranking 
+Model ignores context | Prompt poorly designed
+Similar chunking | Needs reranking
 
 ---
 
